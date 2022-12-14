@@ -4,28 +4,20 @@ const { json } = require('express/lib/response');
 const mongoose = require('mongoose');
 const app = express();
 
-const DB_USER = 'henrique';
-const DB_PASSWORD = encodeURIComponent('gtcanime301');
-
-const person = require('./models/person')
+const personRoute = require('./routes/personRoutes');
 
 app.use(
     express.urlencoded({
-        extended: true
+        extended: true,
     }),
 );
 
 app.use(express.json());
 
-app.post("/person", async(req, res) => {
-    //req.body
-    const {name, salary, approved} = req.body;
+app.use('/person', personRoute);
 
-});
-
-app.get("/", function(req, res, next){
-    res.json({message: "Oi express!"})
-});
+const DB_USER = 'henrique';
+const DB_PASSWORD = encodeURIComponent('gtcanime301');
 
 mongoose.connect(`mongodb+srv://${DB_USER}:${DB_PASSWORD}@cluster0.knlehip.mongodb.net/?retryWrites=true&w=majority`)
 .then(() => {
